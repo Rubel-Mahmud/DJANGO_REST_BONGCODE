@@ -7,6 +7,10 @@ urlpatterns = [
     # path('<int:pk>/', article_detail, name='detail'),
 
     # class base view
-    path('list/', views.ArticleList.as_view(), name='list'),
-    path('<int:pk>/', views.ArticleDetail.as_view(), name='detail'),
+    # path('list/', views.ArticleList.as_view(), name='list'),
+    # path('<int:pk>/', views.ArticleDetail.as_view(), name='detail'),
+
+    # GenericApiView
+    path('list/', views.ArticleListView.as_view(), name='list'),
+    path('<int:pk>/', views.ArticleDetailView.as_view(), name='detail'),
 ]
