@@ -5,6 +5,9 @@ from rest_framework.views import APIView
 from rest_framework.decorators import api_view
 from rest_framework.response import Response
 from rest_framework import status
+from rest_framework.authentication import SessionAuthentication, BaseAuthentication
+from rest_framework.permissions import IsAuthenticated
+from rest_framework import viewsets
 from rest_framework import mixins, generics
 from .models import Article
 from .serializers import ArticleSerializer
@@ -153,7 +156,7 @@ from .serializers import ArticleSerializer
 #         return Response(status=status.HTTP_204_NO_CONTENT)
 
 
-# class ArticleListView2(mixins.ListModelMixin, mixins.CreateModelMixin, generics.GenericAPIView):
+# class ArticleListView(mixins.ListModelMixin, mixins.CreateModelMixin, generics.GenericAPIView):
 #     queryset = Article.objects.all()
 #     serializer_class = ArticleSerializer
 #
@@ -164,7 +167,7 @@ from .serializers import ArticleSerializer
 #         return self.create(request, *args, **kwargs)
 
 #
-# class ArticleDetailView2(mixins.RetrieveModelMixin, mixins.UpdateModelMixin, mixins.DestroyModelMixin, generics.GenericAPIView):
+# class ArticleDetailView(mixins.RetrieveModelMixin, mixins.UpdateModelMixin, mixins.DestroyModelMixin, generics.GenericAPIView):
 #     queryset = Article.objects.all()
 #     serializer_class = ArticleSerializer
 #
@@ -178,10 +181,20 @@ from .serializers import ArticleSerializer
 #         return self.destroy(request, *args, **kwargs)
 
 
-class ArticleListView(generics.ListCreateAPIView, generics.GenericAPIView):
-    queryset = Article.objects.all()
-    serializer_class = ArticleSerializer
+# class ArticleListView(generics.ListCreateAPIView, generics.GenericAPIView):
+#     queryset = Article.objects.all()
+#     serializer_class = ArticleSerializer
+#     authentication_classes = [SessionAuthentication]
+#     permission_classes = [IsAuthenticated]
+#
+# class ArticleDetailView(generics.RetrieveUpdateDestroyAPIView, generics.GenericAPIView):
+#     queryset = Article.objects.all()
+#     serializer_class = ArticleSerializer
+#     # authentication_classes = [SessionAuthentication]
+#     # permission_classes = [IsAuthenticated]
 
-class ArticleDetailView(generics.RetrieveUpdateDestroyAPIView, generics.GenericAPIView):
+class ArticleView(viewsets.ModelViewSet):
     queryset = Article.objects.all()
     serializer_class = ArticleSerializer
+    authentication_classes = [SessionAuthentication]
+    permission_classes = [IsAuthenticated]
