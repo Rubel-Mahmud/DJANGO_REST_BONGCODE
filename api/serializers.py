@@ -22,10 +22,15 @@ from .models import Article
 #         return instance
 
 
-class ArticleSerializer(serializers.ModelSerializer):
+# class ArticleSerializer(serializers.ModelSerializer):
+#     class Meta:
+#         model = Article
+#         # fields = ('id', 'author', 'title', 'content', 'date_created', 'is_public')
+#         fields = '__all__'
 
+
+class ArticleSerializer(serializers.HyperlinkedModelSerializer):
     class Meta:
         model = Article
-        # fields = ('id', 'author', 'title', 'content', 'date_created', 'is_public')
-        fields = '__all__'
-
+        fields = ('id', 'url', 'author', 'title', 'content', 'date_created', 'is_public')
+        # fields = '__all__'
